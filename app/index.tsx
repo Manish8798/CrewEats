@@ -9,6 +9,8 @@ export default function Index() {
     "Manrope-Light": require("../assets/fonts/Manrope-Light.ttf"),
     "Manrope-Regular": require("../assets/fonts/Manrope-Regular.ttf"),
     "Manrope-Medium": require("../assets/fonts/Manrope-Medium.ttf"),
+    "Manrope-Bold": require("../assets/fonts/Manrope-Bold.ttf"),
+    "Manrope-SemiBold": require("../assets/fonts/Manrope-SemiBold.ttf"),
   });
 
   return <AppNavigator />;
