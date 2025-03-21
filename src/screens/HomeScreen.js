@@ -95,7 +95,7 @@ export default function HomeScreen() {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: "#FFF9C4",
+            backgroundColor: "#FFF0BB",
             paddingHorizontal: 20,
           }}
         >
@@ -150,17 +150,30 @@ export default function HomeScreen() {
           </View>
         </View>
         <View style={styles.addFlightContainer}>
-          <Text style={styles.addFlightTitle}>Add Flight</Text>
+          <Text style={styles.addFlightTitle}>
+            {deliveryType == "Delivery" ? "Add Flight" : "Time of Pickup"}
+          </Text>
           <View style={styles.flightInputContainer}>
             <TextInput
               style={styles.flightInput}
-              placeholder="Enter flight number"
+              placeholder={
+                deliveryType == "Delivery" ? "Enter flight number" : "Search"
+              }
               value={flightNumber}
               onChangeText={setFlightNumber}
             />
-            <TouchableOpacity style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add</Text>
-            </TouchableOpacity>
+            {deliveryType == "Delivery" ? (
+              <TouchableOpacity style={styles.addButton}>
+                <Text style={styles.addButtonText}>Add</Text>
+              </TouchableOpacity>
+            ) : (
+              <AntDesign
+                style={{ padding: 15 }}
+                name="down"
+                size={14}
+                color="black"
+              />
+            )}
           </View>
           <TouchableOpacity style={styles.withoutFlightButton}>
             <Text style={styles.withoutFlightText}>
@@ -223,7 +236,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
@@ -244,15 +257,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bannerContainer: {
-    backgroundColor: "#FFF9C4",
+    backgroundColor: "#FFF0BB",
     padding: 15,
     marginHorizontal: 0,
+    paddingTop: 20,
   },
   bannerText: {
     fontSize: 14,
     textAlign: "left",
     fontWeight: "400",
     fontFamily: "Manrope-Regular",
+    marginTop: 20,
   },
   datePickerContainer: {
     flexDirection: "row",
@@ -301,7 +316,9 @@ const styles = StyleSheet.create({
   },
   addFlightContainer: {
     padding: 15,
-    backgroundColor: "#FFF9C4",
+    backgroundColor: "#FFF0BB",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   addFlightTitle: {
     fontSize: 14,
@@ -345,6 +362,9 @@ const styles = StyleSheet.create({
     color: "#333",
     fontWeight: "700",
     fontFamily: "Manrope-Medium",
+    borderBottomWidth: 0.4,
+    borderBottomColor: "#343434",
+    marginBottom: 10,
   },
   menuSection: {
     padding: 15,
