@@ -9,8 +9,9 @@ import {
   Image,
   Modal,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
@@ -30,7 +31,10 @@ const SignupScreen = () => {
     setShowVerificationModal(true);
   };
 
-  const handleSubmitVerificationCode = () => {
+  const handleSubmitVerificationCode = async () => {
+    console.log("HomeTabs");
+    await AsyncStorage.setItem("userToken", "dummyToken");
+    navigation.replace("HomeTabs");
     // Here you would typically verify the code with your API
     // For now, we'll just close the modal
     setShowVerificationModal(false);
@@ -95,7 +99,12 @@ const SignupScreen = () => {
             ></View>
             <Image
               source={require("../../assets/images/badge.png")}
-              style={{ width: 160, height: 80, alignSelf: "center", margin: 20 }}
+              style={{
+                width: 160,
+                height: 80,
+                alignSelf: "center",
+                margin: 20,
+              }}
             />
             <TextInput
               placeholder="Enter verification code"

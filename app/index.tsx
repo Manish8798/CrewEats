@@ -1,6 +1,8 @@
 import { Text, View } from "react-native";
 import SignupScreen from "../src/screens/SignupScreen";
 import { useFonts } from "expo-font";
+import AppNavigator from "../src/navigation/AppNavigator";
+
 
 export default function Index() {
   const [fontsLoaded] = useFonts({
@@ -9,5 +11,5 @@ export default function Index() {
     "Manrope-Medium": require("../assets/fonts/Manrope-Medium.ttf"),
   });
 
-  return <SignupScreen />;
+  return <AppNavigator />;
 }
