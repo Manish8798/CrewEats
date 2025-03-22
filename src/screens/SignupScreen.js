@@ -20,6 +20,8 @@ const SignupScreen = () => {
   const [showVerificationModal, setShowVerificationModal] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
   const [loading, setLoading] = useState(true);
+  const [timer, setTimer] = useState(60);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
 
   // Check if user is already logged in when component mounts
   useEffect(() => {
@@ -46,6 +48,29 @@ const SignupScreen = () => {
     checkLoginStatus();
   }, []); // Empty dependency array means this only runs once on mount
 
+  // Timer effect for verification code resend
+  useEffect(() => {
+    let interval;
+
+    if (showVerificationModal && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          const newTime = prevTimer - 1;
+          if (newTime === 0) {
+            setIsResendDisabled(false);
+          }
+          return newTime;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [showVerificationModal, timer]);
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -66,6 +91,18 @@ const SignupScreen = () => {
     // Here you would typically make an API call to send the verification code
     // For now, we'll just show the modal
     setShowVerificationModal(true);
+    // Reset timer and disable resend button
+    setTimer(60);
+    setIsResendDisabled(true);
+  };
+
+  const handleResendCode = () => {
+    // Here you would make an API call to resend the verification code
+    console.log("Resending verification code to:", email);
+
+    // Reset timer and disable resend button
+    setTimer(60);
+    setIsResendDisabled(true);
   };
 
   const handleSubmitVerificationCode = async () => {
@@ -163,6 +200,25 @@ const SignupScreen = () => {
               onChangeText={setVerificationCode}
               keyboardType="number-pad"
             />
+
+            {/* Timer and Resend Button */}
+            <View style={styles.timerContainer}>
+              {timer > 0 ? (
+                <Text style={styles.timerText}>Resend code in {timer}s</Text>
+              ) : (
+                <TouchableOpacity
+                  style={[
+                    styles.resendButton,
+                    { opacity: isResendDisabled ? 0.4 : 1 },
+                  ]}
+                  disabled={isResendDisabled}
+                  onPress={handleResendCode}
+                >
+                  <Text style={styles.resendButtonText}>Resend Code</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+
             <View style={styles.modalButtonsContainer}>
               <TouchableOpacity
                 style={styles.cancelButton}
@@ -291,11 +347,32 @@ const styles = StyleSheet.create({
     color: "#343434",
     textAlign: "center",
   },
+  timerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+    marginTop: 5,
+  },
+  timerText: {
+    fontSize: 14,
+    color: "#343434",
+    fontFamily: "Manrope-Regular",
+  },
+  resendButton: {
+    padding: 8,
+  },
+  resendButtonText: {
+    fontSize: 14,
+    color: "#343434",
+    fontFamily: "Manrope-SemiBold",
+    textDecorationLine: "underline",
+  },
   modalButtonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 40,
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 30,
   },
   cancelButton: {

@@ -171,7 +171,7 @@ export default function HomeScreen({ navigation }) {
                 style={{ padding: 15 }}
                 name="caretdown"
                 size={14}
-                color="black"
+                color="#343434"
               />
             )}
           </View>
