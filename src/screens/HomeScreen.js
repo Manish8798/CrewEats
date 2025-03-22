@@ -157,7 +157,7 @@ export default function HomeScreen({ navigation }) {
             <TextInput
               style={styles.flightInput}
               placeholder={
-                deliveryType == "Delivery" ? "Enter flight number" : "Search"
+                deliveryType == "Delivery" ? "Enter flight number" : "Select"
               }
               value={flightNumber}
               onChangeText={setFlightNumber}
