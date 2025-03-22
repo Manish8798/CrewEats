@@ -175,11 +175,13 @@ export default function HomeScreen({ navigation }) {
               />
             )}
           </View>
-          <TouchableOpacity style={styles.withoutFlightButton}>
-            <Text style={styles.withoutFlightText}>
-              Continue without flight
-            </Text>
-          </TouchableOpacity>
+          {deliveryType == "Delivery" && (
+            <TouchableOpacity style={styles.withoutFlightButton}>
+              <Text style={styles.withoutFlightText}>
+                Continue without flight
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={styles.menuSection}>
@@ -272,6 +274,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "400",
     fontFamily: "Manrope-Regular",
+    lineHeight: 18,
     // marginTop: 20,
   },
   datePickerContainer: {
@@ -324,6 +327,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF0BB",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    paddingBottom: 30,
   },
   addFlightTitle: {
     fontSize: 14,
@@ -369,7 +373,7 @@ const styles = StyleSheet.create({
     fontFamily: "Manrope-Medium",
     borderBottomWidth: 0.4,
     borderBottomColor: "#343434",
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   menuSection: {
     padding: 15,
@@ -379,6 +383,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginVertical: 20,
     fontFamily: "Manrope-Medium",
+    lineHeight: 20,
   },
   categoryGrid: {
     flexDirection: "row",

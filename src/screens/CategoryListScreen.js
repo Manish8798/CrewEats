@@ -211,9 +211,12 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "500",
-    color: "#333",
+    color: "#343434",
+    fontFamily: "Manrope-Regular",
+    opacity: 0.5,
+    lineHeight: 16,
   },
   cartButton: {
     padding: 5,
@@ -249,6 +252,7 @@ const styles = StyleSheet.create({
     color: "#343434",
     marginBottom: 5,
     fontFamily: "Manrope-Medium",
+    lineHeight: 18,
   },
   restaurantLocation: {
     fontSize: 12,
@@ -256,6 +260,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: "Manrope-Regular",
     fontWeight: "500",
+    lineHeight: 16,
   },
   ratingContainer: {
     flexDirection: "row",
@@ -267,12 +272,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontFamily: "Manrope-Regular",
     fontWeight: "500",
+    lineHeight: 16,
   },
   deliveryInfo: {
     fontSize: 12,
     fontWeight: "700",
     color: "#007E5D",
     fontFamily: "Manrope-Bold",
+    lineHeight: 16,
   },
   closedText: {
     color: "#FF6B6B",
