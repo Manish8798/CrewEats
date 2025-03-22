@@ -27,7 +27,7 @@ const HomeTabs = () => {
           );
         },
         tabBarActiveTintColor: "#000",
-        tabBarInactiveTintColor: "#B2BEB5",
+        tabBarInactiveTintColor: "#808080",
         headerShown: false,
       })}
     >
