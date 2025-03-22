@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginHorizontal: 0,
     paddingTop: 20,
+    paddingLeft: 20,
   },
   bannerText: {
     fontSize: 14,
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   addFlightContainer: {
-    padding: 15,
+    padding: 20,
     backgroundColor: "#FFF0BB",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
