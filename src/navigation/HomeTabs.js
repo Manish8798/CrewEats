@@ -18,7 +18,7 @@ const HomeTabs = () => {
           let icons = {
             Home: "home-outline",
             Favourites: "heart-outline",
-            Orders: "cart-outline",
+            Orders: "receipt-outline",
             Search: "search-outline",
             Profile: "person-outline",
           };
