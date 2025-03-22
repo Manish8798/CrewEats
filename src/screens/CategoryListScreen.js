@@ -11,11 +11,13 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
 
-export default function CategoryListScreen({ navigation }) {
+export default function CategoryListScreen({ navigation, route }) {
   // State to track favorite restaurants
   const [favorites, setFavorites] = useState({
     "calista-tavern-1": true,
   });
+
+  const { name } = route.params;
 
   // Toggle favorite status
   const toggleFavorite = (id) => {
@@ -114,14 +116,16 @@ export default function CategoryListScreen({ navigation }) {
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation?.goBack()}
-        >
-          <AntDesign name="arrowleft" size={24} color="#666" />
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation?.goBack()}
+          >
+            <AntDesign name="arrowleft" size={24} color="#666" />
+          </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>American</Text>
+          <Text style={styles.headerTitle}>{name}</Text>
+        </View>
 
         <TouchableOpacity style={styles.cartButton}>
           <Ionicons name="cart-outline" size={24} color="#333" />
@@ -209,13 +213,14 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: 5,
+    marginRight: 10,
   },
   headerTitle: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "500",
     color: "#343434",
     fontFamily: "Manrope-Regular",
-    opacity: 0.5,
+    opacity: 0.8,
     lineHeight: 16,
   },
   cartButton: {

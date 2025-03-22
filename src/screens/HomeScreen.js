@@ -192,7 +192,7 @@ export default function HomeScreen({ navigation }) {
               <TouchableOpacity
                 key={category.id}
                 style={styles.categoryItem}
-                onPress={() => navigation.navigate("CategoryListScreen")}
+                onPress={() => navigation.navigate("CategoryListScreen", {name: category.name})}
               >
                 <View style={styles.categoryIcon}>
                   {/* <Text style={styles.categoryEmoji}>
