@@ -9,6 +9,11 @@ import {
   Image,
   Modal,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -88,12 +93,18 @@ const SignupScreen = () => {
   };
 
   const handleSendVerificationCode = () => {
-    // Here you would typically make an API call to send the verification code
-    // For now, we'll just show the modal
-    setShowVerificationModal(true);
-    // Reset timer and disable resend button
-    setTimer(60);
-    setIsResendDisabled(true);
+    // Dismiss keyboard first
+    Keyboard.dismiss();
+
+    // Small delay to ensure keyboard is dismissed before showing modal
+    setTimeout(() => {
+      // Here you would typically make an API call to send the verification code
+      // For now, we'll just show the modal
+      setShowVerificationModal(true);
+      // Reset timer and disable resend button
+      setTimer(60);
+      setIsResendDisabled(true);
+    }, 100);
   };
 
   const handleResendCode = () => {
@@ -131,35 +142,47 @@ const SignupScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={require("../../assets/images/logo.png")}
-        style={styles.logo}
-      />
-      <Image
-        source={require("../../assets/images/avatar.png")}
-        style={styles.avatar}
-      />
-      <Text style={styles.title}>
-        FREE Delivery Service for Crew & Airport employees
-      </Text>
-      <Text style={styles.subtitle}>
-        Sign Up / Login using official email ID
-      </Text>
-      <TextInput
-        placeholder="Enter your work email"
-        style={styles.input}
-        value={email}
-        onChangeText={validateEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TouchableOpacity
-        style={[styles.button, { opacity: isValidEmail ? 1 : 0.4 }]}
-        disabled={!isValidEmail}
-        onPress={handleSendVerificationCode}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
       >
-        <Text style={styles.buttonText}>Send Verification Code</Text>
-      </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+          >
+            <Image
+              source={require("../../assets/images/logo.png")}
+              style={styles.logo}
+            />
+            <Image
+              source={require("../../assets/images/avatar.png")}
+              style={styles.avatar}
+            />
+            <Text style={styles.title}>
+              FREE Delivery Service for Crew & Airport employees
+            </Text>
+            <Text style={styles.subtitle}>
+              Sign Up / Login using official email ID
+            </Text>
+            <TextInput
+              placeholder="Enter your work email"
+              style={styles.input}
+              value={email}
+              onChangeText={validateEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            <TouchableOpacity
+              style={[styles.button, { opacity: isValidEmail ? 1 : 0.4 }]}
+              disabled={!isValidEmail}
+              onPress={handleSendVerificationCode}
+            >
+              <Text style={styles.buttonText}>Send Verification Code</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
 
       {/* Verification Code Modal */}
       <Modal
@@ -168,77 +191,90 @@ const SignupScreen = () => {
         visible={showVerificationModal}
         onRequestClose={() => setShowVerificationModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Verify Email</Text>
-            {/* <Text style={styles.modalSubtitle}>
-              A verification code has been sent to {email}
-            </Text> */}
-            <View
-              style={{
-                width: "100%",
-                height: 1,
-                backgroundColor: "#E8E8E8",
-                marginTop: 10,
-                marginBottom: 10,
-                opacity: 1,
-              }}
-            ></View>
-            <Image
-              source={require("../../assets/images/badge.png")}
-              style={{
-                width: 160,
-                height: 80,
-                alignSelf: "center",
-                margin: 20,
-              }}
-            />
-            <TextInput
-              placeholder="Enter verification code"
-              style={styles.verificationInput}
-              value={verificationCode}
-              onChangeText={setVerificationCode}
-              keyboardType="number-pad"
-            />
-
-            {/* Timer and Resend Button */}
-            <View style={styles.timerContainer}>
-              {timer > 0 ? (
-                <Text style={styles.timerText}>Resend code in {timer}s</Text>
-              ) : (
-                <TouchableOpacity
-                  style={[
-                    styles.resendButton,
-                    { opacity: isResendDisabled ? 0.4 : 1 },
-                  ]}
-                  disabled={isResendDisabled}
-                  onPress={handleResendCode}
-                >
-                  <Text style={styles.resendButtonText}>Resend Code</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-
-            <View style={styles.modalButtonsContainer}>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => setShowVerificationModal(false)}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 1 : 0}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Verify Email</Text>
+              <View
+                style={{
+                  width: "100%",
+                  height: 1,
+                  backgroundColor: "#E8E8E8",
+                  marginTop: 10,
+                  marginBottom: 10,
+                  opacity: 1,
+                }}
+              ></View>
+              <ScrollView
+                contentContainerStyle={{ alignItems: "center", flexGrow: 1 }}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
               >
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.verifyButton,
-                  { opacity: verificationCode.length > 0 ? 1 : 0.4 },
-                ]}
-                disabled={verificationCode.length === 0}
-                onPress={handleSubmitVerificationCode}
-              >
-                <Text style={styles.verifyButtonText}>Verify</Text>
-              </TouchableOpacity>
+                <Image
+                  source={require("../../assets/images/badge.png")}
+                  style={{
+                    width: 160,
+                    height: 80,
+                    alignSelf: "center",
+                    margin: 20,
+                  }}
+                />
+                <TextInput
+                  placeholder="Enter verification code"
+                  style={styles.verificationInput}
+                  value={verificationCode}
+                  onChangeText={setVerificationCode}
+                  keyboardType="number-pad"
+                  autoFocus={true}
+                  maxLength={6}
+                />
+
+                {/* Timer and Resend Button */}
+                <View style={styles.timerContainer}>
+                  {timer > 0 ? (
+                    <Text style={styles.timerText}>
+                      Resend code in {timer}s
+                    </Text>
+                  ) : (
+                    <TouchableOpacity
+                      style={[
+                        styles.resendButton,
+                        { opacity: isResendDisabled ? 0.4 : 1 },
+                      ]}
+                      disabled={isResendDisabled}
+                      onPress={handleResendCode}
+                    >
+                      <Text style={styles.resendButtonText}>Resend Code</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+
+                <View style={styles.modalButtonsContainer}>
+                  <TouchableOpacity
+                    style={styles.cancelButton}
+                    onPress={() => setShowVerificationModal(false)}
+                  >
+                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.verifyButton,
+                      { opacity: verificationCode.length > 0 ? 1 : 0.4 },
+                    ]}
+                    disabled={verificationCode.length === 0}
+                    onPress={handleSubmitVerificationCode}
+                  >
+                    <Text style={styles.verifyButtonText}>Verify</Text>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </SafeAreaView>
   );
@@ -248,7 +284,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#EDD388",
+  },
+  scrollContent: {
+    flexGrow: 1,
     padding: 20,
+    paddingBottom: 40,
   },
   logo: {
     width: 280,
@@ -317,6 +357,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: 20,
     width: "100%",
+    maxHeight: "80%",
   },
   modalTitle: {
     fontSize: 16,
@@ -346,6 +387,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#343434",
     textAlign: "center",
+    width: "80%",
   },
   timerContainer: {
     flexDirection: "row",
@@ -373,7 +415,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 40,
     marginTop: 10,
-    marginBottom: 30,
+    marginBottom: 20,
+    width: "80%",
   },
   cancelButton: {
     backgroundColor: "#FFFFFF",
