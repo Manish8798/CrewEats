@@ -1,11 +1,20 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, SafeAreaView } from "react-native";
 
 const FavouritesScreen = () => {
   return (
-    <View>
-      <Text>Favourites</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fff",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text>Favourites</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
