@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     backgroundColor: "#FFFFFF",
     borderColor: "#fff",
-    fontFamily: "Manrope-Light",
+    fontFamily: "Manrope-Medium",
     fontSize: 14,
     color: "#343434",
   },
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#FFFFFF",
-    fontFamily: "Manrope-Medium",
+    fontFamily: "Manrope-Bold",
     fontSize: 14,
     fontWeight: "700",
   },
