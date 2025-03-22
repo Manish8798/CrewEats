@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
 import Constants from "expo-constants";
-
+import ScheduleDeliveryCard from "../components/ScheduleDeliveryCard";
 export default function HomeScreen({ navigation }) {
   const getFormattedDate = () => {
     const today = new Date();
@@ -101,7 +101,7 @@ export default function HomeScreen({ navigation }) {
         >
           <View style={styles.datePickerContainer}>
             <TouchableOpacity style={styles.arrowButton}>
-              <AntDesign name="left" size={14} color="#E8E8E8" />
+              <AntDesign name="left" size={14} color="#B2BEB5" />
             </TouchableOpacity>
 
             <Text style={styles.dateText}>{selectedDate}</Text>
@@ -169,7 +169,7 @@ export default function HomeScreen({ navigation }) {
             ) : (
               <AntDesign
                 style={{ padding: 15 }}
-                name="down"
+                name="caretdown"
                 size={14}
                 color="black"
               />
@@ -192,7 +192,11 @@ export default function HomeScreen({ navigation }) {
               <TouchableOpacity
                 key={category.id}
                 style={styles.categoryItem}
-                onPress={() => navigation.navigate("CategoryListScreen", {name: category.name})}
+                onPress={() =>
+                  navigation.navigate("CategoryListScreen", {
+                    name: category.name,
+                  })
+                }
               >
                 <View style={styles.categoryIcon}>
                   {/* <Text style={styles.categoryEmoji}>
@@ -216,7 +220,7 @@ export default function HomeScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.scheduleButton}>
+        {/* <TouchableOpacity style={styles.scheduleButton}>
           <View>
             <Text style={styles.scheduleText}>Schedule Food Delivery</Text>
             <Text style={styles.scheduleText1}>for Tommorow</Text>
@@ -225,7 +229,8 @@ export default function HomeScreen({ navigation }) {
             style={styles.scheduleEmoji}
             source={require("../../assets/images/clock.png")}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <ScheduleDeliveryCard />
       </ScrollView>
     </SafeAreaView>
   );
@@ -432,6 +437,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500",
     fontFamily: "Manrope-Regular",
+    color: "#343434",
+    lineHeight: 16,
   },
   viewAllIcon: {
     marginLeft: 5,
