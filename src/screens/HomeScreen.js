@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "400",
     fontFamily: "Manrope-Regular",
-    marginTop: 20,
+    // marginTop: 20,
   },
   datePickerContainer: {
     flexDirection: "row",
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
   menuTitle: {
     fontSize: 16,
     fontWeight: "700",
-    marginBottom: 20,
+    marginVertical: 20,
     fontFamily: "Manrope-Medium",
   },
   categoryGrid: {
