@@ -6,6 +6,7 @@ import FavouritesScreen from "../screens/FavouritesScreen";
 import OrdersScreen from "../screens/OrdersScreen";
 import SearchScreen from "../screens/SearchScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import HomeStack from "./HomeStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ const HomeTabs = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Favourites" component={FavouritesScreen} />
       <Tab.Screen name="Orders" component={OrdersScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />

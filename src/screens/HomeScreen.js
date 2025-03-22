@@ -12,7 +12,7 @@ import {
 import { Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
 import Constants from "expo-constants";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const getFormattedDate = () => {
     const today = new Date();
     return new Intl.DateTimeFormat("en-GB", {
@@ -187,7 +187,11 @@ export default function HomeScreen() {
 
           <View style={styles.categoryGrid}>
             {categories.map((category, index) => (
-              <TouchableOpacity key={category.id} style={styles.categoryItem}>
+              <TouchableOpacity
+                key={category.id}
+                style={styles.categoryItem}
+                onPress={() => navigation.navigate("CategoryListScreen")}
+              >
                 <View style={styles.categoryIcon}>
                   {/* <Text style={styles.categoryEmoji}>
                     {getCategoryIcon(category.name)}
