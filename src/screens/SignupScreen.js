@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,14 +8,51 @@ import {
   SafeAreaView,
   Image,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
-const SignupScreen = ({ navigation }) => {
+const SignupScreen = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // Check if user is already logged in when component mounts
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("userToken");
+
+        if (token) {
+          // User is already logged in, navigate to HomeTabs
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "HomeTabs" }],
+          });
+        }
+
+        // If no token, just stop loading and show the login screen
+        setLoading(false);
+      } catch (error) {
+        console.error("Error checking login status:", error);
+        setLoading(false);
+      }
+    };
+
+    checkLoginStatus();
+  }, []); // Empty dependency array means this only runs once on mount
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#343434" />
+      </View>
+    );
+  }
 
   const validateEmail = (text) => {
     // Email regex pattern for work/company emails
@@ -32,14 +69,27 @@ const SignupScreen = ({ navigation }) => {
   };
 
   const handleSubmitVerificationCode = async () => {
-    console.log("HomeTabs");
-    await AsyncStorage.setItem("userToken", "dummyToken");
-    navigation.replace("HomeTabs");
-    // Here you would typically verify the code with your API
-    // For now, we'll just close the modal
-    setShowVerificationModal(false);
-    // Reset the verification code
-    setVerificationCode("");
+    try {
+      // Here you would typically verify the code with your API
+      // For now, we'll just store a token
+      await AsyncStorage.setItem("userToken", "dummyToken");
+
+      // Close the modal
+      setShowVerificationModal(false);
+
+      // Reset the verification code
+      setVerificationCode("");
+
+      console.log("Login successful");
+
+      // Navigate to HomeTabs using reset for a clean navigation state
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "HomeTabs" }],
+      });
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
